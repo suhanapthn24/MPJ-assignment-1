@@ -11,6 +11,38 @@ class Student {
     static int[] subjectTotal = new int[5];
     static int studentCount = 0;
 
+    // Default Constructor
+    Student() {
+        name = "";
+        rollNo = 0;
+        average = 0;
+        grade = 'C';
+    }
+
+    // Parameterized Constructor
+    Student(String name, int rollNo, int[] marks) {
+        this.name = name;
+        this.rollNo = rollNo;
+
+        int sum = 0;
+        for (int i = 0; i < 5; i++) {
+            this.marks[i] = marks[i];
+            sum += marks[i];
+            subjectTotal[i] += marks[i];
+        }
+
+        average = sum / 5;
+
+        if (average >= 75)
+            grade = 'A';
+        else if (average >= 60)
+            grade = 'B';
+        else
+            grade = 'C';
+
+        studentCount++;
+    }
+
     void input(Scanner sc) {
         System.out.println("Enter Name:");
         name = sc.nextLine();
@@ -36,7 +68,7 @@ class Student {
             grade = 'C';
 
         studentCount++;
-        sc.nextLine(); // clear buffer
+        sc.nextLine();
     }
 
     void display() {
@@ -60,13 +92,16 @@ class Student {
         int n = sc.nextInt();
         sc.nextLine();
 
-        Student[] s = new Student[n];
+        Student[] s = new Student[n + 1];  // +1 for the hardcoded student
 
         for (int i = 0; i < n; i++) {
-            s[i] = new Student();
+            s[i] = new Student();  // using default constructor
             s[i].input(sc);
             s[i].display();
         }
+
+        s[n - 1] = new Student("suhana", n, new int[]{80, 75, 85, 90, 70});
+        s[n - 1].display();
 
         Student.displaySubjectAverages();
         sc.close();
